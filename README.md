@@ -8,10 +8,12 @@
 ## Core Knowledge Areas for Low Latency C++ Interviews
 ### 1. C++ Performance and Internals
 * Deep understanding of C++ memory model, stack vs heap, and allocation overheads
-* Move semantics, RAII, inline, constexpr, placement new
+* Modern C++ features
+  * Move semantics, RAII, inline, constexpr, placement new, noexcept, final, override
+  * Smart Pointers(`unique_ptr`, `shared_ptr`, `weak_ptr`) -- and when not to use them
+  * C++17/20/23 relevant features: std::optional, std::variant, std::chrono, coroutines (if applicable)
 * Copy elision, RVO, small object optimization
 * Templates & constexpr metaprogramming — compile-time performance tricks
-* C++17/20/23 relevant features: std::optional, std::variant, std::chrono, coroutines (if applicable)
 * Avoiding virtual dispatch, using CRTP
 #### Practice
 * Re-implement parts of STL (vector, ring buffer) from scratch
