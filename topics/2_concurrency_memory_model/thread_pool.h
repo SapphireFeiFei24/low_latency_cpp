@@ -8,7 +8,7 @@ namespace concurrency {
 
     class ThreadPool {
         public:
-        ThreadPool(size_t capacity): capacity_(capacity) {
+        explicit ThreadPool(size_t capacity): capacity_(capacity) {
             for (size_t i = 0; i < capacity_; ++i) {
                 workers_.emplace_back([this]() {
                     while (true) {
