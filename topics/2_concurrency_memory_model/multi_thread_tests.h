@@ -2,6 +2,8 @@
 
 #include <random>
 #include <thread>
+
+#include "bounded_blocking_queue.h"
 #include "concurrent_lru_cache.h"
 #include "thread_pool.h"
 
@@ -71,3 +73,25 @@ void thread_pool_test() {
               << " ms\n";
 }
 
+void test_queue() {
+    concurrency::BoundedBlockingQueue<int> q(5);
+
+    // Producer
+    std::thread p([&]() {
+        for (int i = 0; i < 20; i++) {
+            q.push(i);
+            std::cout << "Produced " << i << "\n";
+        }
+    });
+
+    // Consumer
+    std::thread c([&]() {
+        for (int i = 0; i < 20; i++) {
+            int x = q.pop();
+            std::cout << "Consumed " << x << "\n";
+        }
+    });
+
+    p.join();
+    c.join();
+}
