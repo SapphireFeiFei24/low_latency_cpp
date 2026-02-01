@@ -14,6 +14,9 @@ namespace concurrency {
 
             std::unique_lock<std::mutex> lock(mutex_);
             not_full_.wait(lock, [&] {
+                // wait: in a single atomic step, it releases the mutex
+                // when unblocked (via notification or spurious wakeup)
+                    // it reacquires the lock beofre returning
                 return queue_.size() < capacity_ && !closed_;
             });
             queue_.push(value);
