@@ -20,6 +20,45 @@
  * Input/Ouput: streams, only once
  ***/
 
+template<typename T>
+class MyVectorIterator {
+private:
+    T* ptr;
+
+public:
+    MyVectorIterator(T* p) : ptr(p) {}
+
+    T& operator*() {
+        return *ptr;
+    }
+
+    T* operator->() {
+        // it->member, transformed into
+        // (it.operator->())->member
+
+        return ptr;
+    }
+
+    MyVectorIterator& operator++() { // Overload prefix
+        ++ptr;
+        return *this;
+    }
+
+    MyVectorIterator operator++(int) { // Overload postfix
+        // Takes a dummy int argument to distinguish it from the prefix version
+        // Returns a copy of the object *before* the increment
+        // for (auto it = v.begin(); it != v.end(); ++it) is better than it++, because it avoid unnecessary copy
+
+        MyVectorIterator temp = *this;
+        ++ptr;
+        return temp;
+    }
+
+    bool operator!=(const MyVectorIterator& other) const {
+        return ptr != other.ptr; // compare raw pointer
+    }
+};
+
 void use_vector_iterator() {
     // Reallocation invalidates ALL iterators, push_back, insert, resize
     vector<int>::iterator vi;
