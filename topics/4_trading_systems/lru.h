@@ -27,13 +27,15 @@ public:
         if (iter != key2iter_.end()) {
             // key exist
             iter->second->second = value;
+            // No need to update key2iter_
             data_.splice(data_.begin(), data_, iter->second);
         } else {
+            key2iter_[key] = data_.begin();
             data_.emplace_front(key, value);
         }
 
 
-        key2iter_[key] = data_.begin();
+
 
         if ((key2iter_.size()) > capacity_) {
             int expired_key = std::prev(data_.end())->first;
