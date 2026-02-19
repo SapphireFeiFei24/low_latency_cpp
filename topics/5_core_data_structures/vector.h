@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <string>
 /***
  * Contiguous dynamic array
  * Random access O(1)
@@ -65,12 +66,15 @@ public:
 };
 
 void use_vector () {
-    std::vector<int> vec;
-    vec.resize(10);
+    std::vector<std::string> vec;
+    vec.resize(10, "");
     vec.reserve(10);
-    vec.emplace_back(10);
+    vec.emplace_back("x");
+    vec.emplace_back(5, 'x'); // construct object inplace no temporary object needed, prefer when obj is expensive
+    vec.push_back("x");  // Add existing object to vector creates a temporary std::string, then moves/copies it
     vec.pop_back();
     vec.begin();
-    vec.end();
+    vec.end(); // next iter after the last ele
+    vec.back(); // access the last vector
 }
 
