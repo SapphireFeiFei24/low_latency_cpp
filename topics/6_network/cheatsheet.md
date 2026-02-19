@@ -11,11 +11,42 @@
 ## TCP/IP 5 Layer model
 ![img_1.png](img_1.png)
 
-## TCP Handshakes
-> 3 Handshakes to connect, 4 Handshakes to disconnect \
-> * Reason for 4 handshakes for disconnection: After the client send FIN, the server can still send more data, when it's done sending data, it'll send a FIN back to client.
+## TCP
+### Handshakes
+> 3 Handshakes to connect, 4 Handshakes to disconnect 
+> * Why 4 handshakes for connection: avoid old duplicate connection
+> * Why 4 handshakes for disconnection: After the client send FIN, the server can still send more data, when it's done sending data, it'll send a FIN back to client.
 ![img_2.png](img_2.png)
 
+### Congestion Control
+1. Slow start phase: probing network capacity, exponential increase after one RTT(round trip time).
+2. Congestion Avoidance: slow increase by 1
+3. Congestion Detection: goes back to stage 1 or 2.
+   3.1 Detection: by packet loss or duplicate ACK
+
+#### Fast retransmission
+> When receiver receive packets out of order, it sends duplicate(3) ACKs
+> This way the sender bypass the long time timeout by resending the packet when receiving duplicate ACKs.
+
+#### Fast recovery
+> Cut the threahold into half instead of going back to stage 1.
+> Slowing increase from this halved thres.
+
+## UDP
+> Market Data use UDP multicast
+> * One sender, multiple receivers
+
+### Data Loss Solution
+Exchanges provide:
+* Sequence numbers
+* Snapshot recovery channel
+* Gap request protocol
+
+Solution:
+* Track sequence numbers
+* Detect gaps
+* Request replay
+* Use snapshot sync
 ## Data Pack/Unpack
 ### 1. Packing: The Sending Process
 Before data leaves your device, it goes through a process of encapsulation, where more information is added at each layer of the network stack.
@@ -38,3 +69,5 @@ Once packets reach their destination, the process is reversed to reassemble the 
 * Handling Errors: If a packet is lost or corrupted, TCP requests a retransmission of that specific packet, not the entire file.
 
 ## DNS // TODO
+
+## Socket Programming in C++ // TODO

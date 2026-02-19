@@ -34,8 +34,8 @@ Low Address
 ### Page
 > a fixed-length, contiguous block of virtual address space used by the operating system to manage memory efficiently.
 #### Page Faults
-> If the CPU attempts to access a page not currently in RAM, a "page fault" occurs, triggering the OS to load the data from the disk.
-
+> If the CPU attempts to access a page not currently in **RAM**, a "page fault" occurs, triggering the OS to load the data from the disk.
+> This causes high latency, try to avoid this in trading system.
 
 ### Virtual Memory Address vs Page Table vs TLB
 * Virtual Memory Address
