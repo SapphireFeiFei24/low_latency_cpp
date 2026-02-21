@@ -1,4 +1,4 @@
-# Operating System Checklist
+# Operating System
 ## Process vs Thread
 * Process:
   * Own address space
@@ -49,7 +49,8 @@ Low Address
   * Fast
   * If TLB miss, check Page Table
 
-## Heap vs Stack
+## Memory Management
+### Heap vs Stack
 > * Stack: Functions, function params, local variables, **fixed sized arrays(array)**, Object with automatic storage durations
 >   * Speed: Fast allocation and deallocation
 >   * Size Limits: small
@@ -63,3 +64,10 @@ Low Address
 * Cache Inefficiency: Stack memory is a single, contiguous block, and access patterns tend to be localized to the top of the stack, making it very cache-friendly. Heap memory allocations can be scattered across different memory locations, leading to more CPU cache misses when accessing related data, which significantly slows down execution.
 * System Call Overhead: When the memory manager runs out of available space in its current pool, it must request more memory from the operating system via a system call (e.g., mmap). These calls involve a slow context switch from user mode to kernel mode and back, incurring substantial overhead.
 
+### Best Practice
+1. Use Smart Pointers
+2. RAII(Resource Acquisition Is Initialization)
+   * Encapsulation resources within objects
+3. Prefer Stack Allocation
+4. Avoid Raw Pointers
+5. Use Std library (mem management handled internally).
