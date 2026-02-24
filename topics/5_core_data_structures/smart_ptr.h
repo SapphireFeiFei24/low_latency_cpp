@@ -5,7 +5,7 @@ namespace smart_ptr {
     /***
      * Both data and reference count are maintained on the heap.
      * Reason:
-     *  Stack is tied to the lifetime of the object. Destroyed during object desctruction
+     *  Stack is tied to the lifetime of the object. Destroyed during object destruction
      *  Shared access across shared ptrs
      * noexcept on move semantics for vector reallocation optimization
      ***/

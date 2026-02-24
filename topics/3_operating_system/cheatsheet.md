@@ -25,7 +25,37 @@ High Address
 +------------------+
 Low Address
 ```
+## Cache
+### L1/L2/L3 Cache
+> Specialized, high-speed SRAM memory levels embedded in or near the CPU, designed to minimize data access latency from slower DRAM.
 
+* L1 Cache
+  * Fastest & Smallest memory.
+  * Built directly into each CPU core.
+  * 32KB ~ 128KB
+  * instruction cache(I-Cache) and Data cache(D-Cache)
+  
+
+* L2 Cache
+  * Larger but slightly slower than L1
+  * New Core
+  * Secondary buffer
+  * 256KB to 1MB
+
+* L3 Cache
+  * largest and slowest of the cache levels, still significantly faster than main RAm
+  * shared among all CPU cores and serves to coordinate data between them
+  * 4MB ~ 64Mb+
+
+### Cache line
+> Cache line size: the number of bytes loaded together in one entry in the cache \
+> Usually 64 bytes
+
+### False Sharing
+> Performance-degrading phenomenon in **multi-threaded** programs where multiple threads inadvertently access different, logically independent variables that happen to reside on the same cache line in the CPU cache.
+
+* How it occurs
+  * entire cache line loaded -> one core modifies ont part of it -> the entire line marked as invalid for other cores -> other cores tries to access sth on this line -> triggers reloading the whole line
 ## Virtual Memory
 > * Illusion of Large Memory
 > * Isolation between process
@@ -50,10 +80,24 @@ Low Address
   * If TLB miss, check Page Table
 
 ## Memory Management
+### Stack vs Heap Definition
+
+#### Stack
+* temporary workspace for function calls and local variables
+* memory lifetime is tied to the function/class
+* Data is small (~1MB)
+* Risk: stackoverflow
+
+#### Heap
+* Dynamic memory allocation
+* managed by developer
+* Data is larger and flexible
+* Risk: memory leak
 ### Heap vs Stack
 > * Stack: Functions, function params, local variables, **fixed sized arrays(array)**, Object with automatic storage durations
 >   * Speed: Fast allocation and deallocation
 >   * Size Limits: small
+>   * Thread safe: isolated within single cpu
 > * Heap: **Dynamic Data Structures(vector)**, new, longer lifetime, large block of data
 >   * Manual, might cause memory leaks if not taken care of
 >   * Speed: Slower than stack allocation; involves searching for available memory blocks.
