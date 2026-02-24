@@ -56,7 +56,7 @@ int main() {
 ```
 
 ## Return Value Optimization(RVO) and Copy Elision
-The compiler is allowed(and since C++17, required) to elide copies/moves when returning a local variable directly.
+> The compiler is allowed(and since C++17, required) to elide copies/moves when returning a local variable directly.
 
 ### When ROV Doesn't Happen
 RVO fails when:
@@ -69,6 +69,13 @@ RVO fails when:
 
 It allows the compiler to pick the move constructor.
 It tells the compiler: "I won't use it again. Feel free to take it"
+```c++
+#include <type_traits>
+template <typename T>
+constexpr std::remove_reference_t<T>&& move(T&& t) noexcept {
+    return static_cast<std::remove_reference_t<T>&&>(t);
+}
+```
 
 ### `std::forward`
 Used in template functions to preserve value categories
@@ -102,6 +109,7 @@ So C++ defines reference collapsing rules to determine what the final type shoul
 These rules enable perfect forwarding.
 
 ## Copy Elision vs Move Semantics Cost
+> Copy elision: skips creating unnecessary temporary objects during initialization or return, constructing them directly in the target memory.
 * Construct on stack, ~1-3 ns, almost free
 * Copy large vector, ~O(N), can be 100-500 ns
 * Move large vector, ~10-20ns, just swaps pointers -- avoid unnecessary copy
