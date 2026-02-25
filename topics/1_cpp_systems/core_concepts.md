@@ -68,3 +68,11 @@
 * emplace_back vs push_back
   * emplace_back: construct object in place, more efficient
   * push_back: requires a pre-constructed object to copy or move into the container
+
+### 8. Plain Old Data no Default initialization
+> If a variable has automatic storage duration(meaning it's declared inside a function) and is a POD type,
+> It's not cleared by the system. It reuses whatever bits were left there.
+* Types that contain "Garbage"
+  * Any type that doesn't have a Constructor to do the work for you will contain random data
+  * Fundamental Types: int, float, double, char, bool, long etc
+  * 

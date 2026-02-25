@@ -11,7 +11,7 @@ public:
     }
 
     void addNum(int num) {
-        // always _low_data.size() >= _high_data.size(), optimize branch
+        // always _low_data.size() <= _high_data.size(), optimize branch
         _low_data.push(num);
         _high_data.push(_low_data.top());
         _low_data.pop();

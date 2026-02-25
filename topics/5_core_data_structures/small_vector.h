@@ -12,7 +12,7 @@ namespace small_vector {
     class SmallVector {
         int* _heap_data;
         static constexpr int THRES = 8;
-        std::array<int, THRES> _stack_data;
+        std::array<int, THRES> _stack_data = {0};
         int _capacity;
         int _cnt;
         std::allocator<int> _alloc;

@@ -13,7 +13,7 @@ public:
         const int C = grid[0].size();
         int n = R * C;
         std::vector<int> root(n, -1);
-        std::vector<int> rank(n, -1);
+        std::vector<int> rank(n, 0);
         int count = 0;
         auto index = [&](int r, int c) {
             return r * C + c;
@@ -48,6 +48,7 @@ public:
             for (int c = 0; c < C; ++c) {
                 if (grid[r][c] == '0') continue;
                 root[index(r, c)] = index(r, c);
+                rank[index(r, c)] = 1;
                 ++count;
             }
         }

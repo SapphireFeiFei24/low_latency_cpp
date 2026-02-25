@@ -4,7 +4,7 @@ class Solution {
     using Key = std::array<int, 26>;
 
     struct KeyHash {
-        size_t operator()(const Key& k) const {
+        size_t operator()(const Key& k) const { // has to be const
             // override operator for hashing
             size_t h = 0;
             for (const int v: k) {
@@ -16,7 +16,7 @@ class Solution {
         }
     };
     Key compress(const std::string& s) {
-        Key key{};
+        Key key{}; // this has to be proper initialized or else the value can be random
         for (const auto& c: s) {
             // int(c) - int('a') no need casting
             ++key[c - 'a'];
