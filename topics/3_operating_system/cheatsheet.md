@@ -60,7 +60,7 @@ Low Address
 > * Illusion of Large Memory
 > * Isolation between process
 > * Lazy allocation
-
+> * **Each process has itw own private page tables.**
 ### Page
 > a fixed-length, contiguous block of virtual address space used by the operating system to manage memory efficiently.
 #### Page Faults
@@ -115,3 +115,75 @@ Low Address
 3. Prefer Stack Allocation
 4. Avoid Raw Pointers
 5. Use Std library (mem management handled internally).
+
+## Process
+### Definition
+* An instance of a running program
+* Has its own
+  * virtual address space
+  * file descriptor table
+  * stack & heap
+  * registers
+  * PID
+  * Signal handlers
+  * Scheduling state
+
+### Copy-On-Write
+> Does not copy memory immediately. This makes fork() relatively cheap.
+* Parent & child share same physical pages
+* Marked read-only
+* When one writes → page fault → kernel copies page
+  * O(number of page tables), not full memory copy
+
+### `fork()`
+* Creates a new child process, gets a copy of parent
+* After fork
+  * Memory: copy-on-write
+  * File descriptors: Shared
+  * Heap: COW
+  * Stack: COW
+
+### `vfork()`
+> Very dangerous.
+> * Child must NOT modify memory
+    >   * Must NOT return from function
+>   * Must NOT call exit() (use _exit())
+> * Used for:
+    >     * Immediately calling exec()
+>     * Avoid page table duplication
+* Child shares same address space
+* Parent is suspended until
+  * child calls exec(), OR,
+  * child calls _exit()
+* **No copy-on-write**
+* Faster:
+  * No page table duplication
+  * No COW setup
+  * Parent blocked -> no race
+* Risky
+
+### `clone()`
+> `forl()` is implemented using `clone()`
+clone allows:
+* Share memory
+* Share file descriptors
+* Share signal handlers
+* Create threads
+
+## IPC(inter-process communication)
+// TODO: Pipe, Named Pipe
+
+## TLB flush
+> clears cached virtual-to-physical address mappings in the CPU's memory management unit.
+### When
+Occurs during context switches between processes (if ASIDs are not used), when freeing virtual memory via munmap, during page table updates, or via TLB shootdowns (when one CPU notifies others to flush).
+### Performance Impact
+Expensive. Forces the CPU to perform costly page table walks to re-cache mappings
+
+### Why
+TLB flushes ensure security by preventing a process from accessing memory that has been reassigned to another process or the kernel.
+
+## Page Table Walk
+> Triggered by a TLB miss. Expensive. Tree traverse on Multilevel Table.
+
+A page table walk is the hardware-driven (MMU) or software-driven (kernel) process of traversing multi-level page tables to translate a virtual address to a physical address. 
