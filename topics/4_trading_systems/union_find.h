@@ -36,7 +36,7 @@ public:
                 std::swap(r1, r2);
             }
 
-            root[r2] = r1; // grow the lower rank
+            root[r2] = r1; // grow the bigger sizes
             rank[r1] += rank[r2];
 
             // merge count
