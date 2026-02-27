@@ -15,10 +15,14 @@ using Type = std::tuple<>;
 };
 
 // General cases
-template <typename... Types>
+template <typename T, typename... Tails>
 struct Reverse {
-using Type 
-};
+using TailReverse = typename Reverse<Tails...>::Type;
+using Type = decltype(std::tuple_cat(
+            std::declval<TailReverse>(), 
+            std::declval<std::tuple<T>>()
+            ));
+   };
 ```
 ### Type Deducing
 ```c++
