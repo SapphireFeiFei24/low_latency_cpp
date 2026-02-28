@@ -15,18 +15,27 @@ std::sort(tasks.begin(), tasks.end(), [&](const vector<int>& a, const vector<int
 using MaxHeap = std::priority_queue<int>;
 using MinHeap = std::priority_queue<int, std::vector<int>, std::greater>;
 
-// customized cmp func
+// customized cmp func (can't be used as a private member)
+// lambda is a functor that's created by the compiler
 auto cmp = [&]()(const vector<int>& a, const vector<int>& b) {
     return a[1] < b[1]; // ascending
 });
 using MaxHeap = std::priority_queue<int, std::vector<int>, decltype(cmp)>;
 
-// customized callable struct
+// customized functor: use as member variables
 struct Comparator {
-bool operator()(const vector<int>& a, const vector<int>& b) const {
-    return a[1] < b[1]; // ascending
-}
-using MaxHeap = std::priority_queue<int, std::vector<int>, decltype(cmp)>;
+    bool operator()(const vector<int>& a, const vector<int>& b) const {
+        return a[1] < b[1]; // ascending
+    }
+};
+using MaxHeap = std::priority_queue<int, std::vector<int>, Comparator>;
+
+// Defined as a member variable
+class MyClass {
+    static bool cmp(const vector<int>& a, const vector<int>& b) const {
+        return a[1] < b[1]; // ascending
+    }
+    using MaxHeap = std::priority_queue<int, std::vector<int>, &cmp>;
 };
 ```
 ## 3. Hash Key
