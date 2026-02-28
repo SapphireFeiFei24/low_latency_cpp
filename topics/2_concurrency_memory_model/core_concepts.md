@@ -11,7 +11,7 @@ std::unique_lock(mtx);
 std::shared_lock(shared_mtx); // can also use unique
 ```
 ## atomic
-> Implemented using a combination of special CPU instructions and cimpiler-level memory barriers
+> Implemented using a combination of special CPU instructions and compiler-level memory barriers
 
 ### Hardware
 * exclusive access on memory
