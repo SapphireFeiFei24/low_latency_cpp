@@ -187,3 +187,13 @@ TLB flushes ensure security by preventing a process from accessing memory that h
 > Triggered by a TLB miss. Expensive. Tree traverse on Multilevel Table.
 
 A page table walk is the hardware-driven (MMU) or software-driven (kernel) process of traversing multi-level page tables to translate a virtual address to a physical address. 
+
+## System Call
+> The programmatic secure method by which a user-level program requests specialized services from the operating system's kernel,
+> such as assessing hardware (dist, network), creating processes, or managing memory.
+
+### Why expensive?
+* User-to-Kernel Mode Switching(Context Switching): save the current process's execution context to memory to ensure it can resume later.
+* Privilege Level Changes:  Moving to kernel mode involves changing CPU rings of execution and modifying segment registers, which is much slower than a simple function call, which only changes the instruction pointer within user space.
+* Cache and TLB Thrashing: Switching to the kernel means the CPU starts executing different code, often resulting in "cache misses." The CPU's hot cache lines—data and instructions currently being used by the application—are evicted to make room for kernel data, causing a slowdown until the cache is repopulated.
+* I/O Blocking: when used for Input/Output
