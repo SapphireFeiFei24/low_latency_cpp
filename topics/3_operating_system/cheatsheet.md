@@ -38,7 +38,7 @@ Low Address
 
 * L2 Cache
   * Larger but slightly slower than L1
-  * New Core
+  * Near Core
   * Secondary buffer
   * 256KB to 1MB
 
@@ -197,3 +197,25 @@ A page table walk is the hardware-driven (MMU) or software-driven (kernel) proce
 * Privilege Level Changes:  Moving to kernel mode involves changing CPU rings of execution and modifying segment registers, which is much slower than a simple function call, which only changes the instruction pointer within user space.
 * Cache and TLB Thrashing: Switching to the kernel means the CPU starts executing different code, often resulting in "cache misses." The CPU's hot cache lines—data and instructions currently being used by the application—are evicted to make room for kernel data, causing a slowdown until the cache is repopulated.
 * I/O Blocking: when used for Input/Output
+
+## Debugging Cache Misses
+### Identify hot loops/functions
+```shell
+perf top
+```
+### L1/L2/L3 Level Cache Profiling
+#### `perf`
+>Perf doesn’t tell you the exact memory address by default, but it tells you the line/function.
+```shell
+perf record -e cache-misses -g ./my_program
+perf report
+```
+
+## SoA(Struct of Array) vs AoS(Array of Struct)
+### When to use AoS
+* Always access all fields together
+* Simple objects, low N
+
+### When to use SoA
+* Access a few fields
+* GPU/SIMD heavy code
