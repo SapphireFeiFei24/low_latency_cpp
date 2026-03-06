@@ -80,8 +80,18 @@ return (... + s); // ((s1 + s2) + s3) ...
 ![img.png](img.png)
 
 ## `decltype` and `declval`
->decltype is a keyword that inspects the type of an expression, while std::declval is a utility function template used in conjunction with decltype to create a fictitious object of a given type in an unevaluated context, particularly useful in template metaprogramming. 
+> both `decltype` and `declval` is compile time
+* decltype is a keyword that inspects the type of an expression, 
+* while std::declval is a utility function template used in conjunction with decltype to create a fictitious object of a given type in an unevaluated context, particularly useful in template metaprogramming. 
+  * only used during compile time. It'll fail to compile if use it at runtime.
+```c++
+using IntType = decltype<int>;
 
+template <typename T>
+using MemberReturnType = decltype(std::declval<T>().some_function()); 
+// Only works at compile-time to find the type returned by some_function()
+
+```
 ## Dependent Type Name Rule
 > If something depends on a template parameter and refers to a nested type,
 you MUST prefix it with typename.

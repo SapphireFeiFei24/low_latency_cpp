@@ -42,7 +42,7 @@
             * **one vptr per object, one vptr for each if multiple inheritance**
     * Virtual Inheritance
         * Solve diamond shape inheritance
-        * Ensgture the derived class contains a single shared instance of a common base class
+        * Ensure the derived class contains a single shared instance of a common base class
 ### 3. Function Inlining and Call Overhead
 * A non-inlined call costs 3–10ns on modern CPUs due to pipeline & branch misprediction.
 

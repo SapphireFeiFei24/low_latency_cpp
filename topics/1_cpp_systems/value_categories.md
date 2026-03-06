@@ -64,8 +64,9 @@ RVO fails when:
 
 ## Perfect Forwarding and `std::move`
 ### `std::move`
-> `std::move` is just a cast to `T&&` -- it doesn't move anything by itself
-> `&&`: an Rvalue reference declaration (C++11 and later)
+> * `std::move` is just a cast to `T&&` -- it doesn't move anything by itself
+> * `&&`: an Rvalue reference declaration (C++11 and later)
+> * it's s compile-time construct that performs a cast, while the actual resource transfer happens at runtime within a movee constructor or move assignment operator.
 
 It allows the compiler to pick the move constructor.
 It tells the compiler: "I won't use it again. Feel free to take it"

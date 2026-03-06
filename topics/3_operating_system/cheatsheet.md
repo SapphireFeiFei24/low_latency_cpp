@@ -71,6 +71,7 @@ Low Address
 * Virtual Memory Address
   *  This is the overarching system enabling virtual addressing. It divides memory into "pages".
 * Page Table (in RAM)
+  * Each process has its own set of page tables
   * Data structure mapping virtual pages to physical frames.
   * When the CPU needs a data address, it uses the page table, which is a table in memory, to find the corresponding physical frame. This is a "page walk".
   * Slow
@@ -129,9 +130,11 @@ Low Address
   * Scheduling state
 
 ### Copy-On-Write
-> Does not copy memory immediately. This makes fork() relatively cheap.
+> Does not copy memory immediately. This makes fork() relatively cheap. 
 * Parent & child share same physical pages
+  * A private copy is only made when a write operation occurs
 * Marked read-only
+  * Will not be able to modify parent memory by default
 * When one writes → page fault → kernel copies page
   * O(number of page tables), not full memory copy
 
@@ -163,7 +166,7 @@ Low Address
 * Risky
 
 ### `clone()`
-> `forl()` is implemented using `clone()`
+> `fork()` is implemented using `clone()`
 clone allows:
 * Share memory
 * Share file descriptors
@@ -171,12 +174,15 @@ clone allows:
 * Create threads
 
 ## IPC(inter-process communication)
-// TODO: Pipe, Named Pipe
+### Shared Memory
+* `mmap()`: map files or devices into a process's virtual memory space
+* `shmget()`: return the identifier of the shared memory segment associated with the value of the argument key
+### Pipes andSockets
 
 ## TLB flush
 > clears cached virtual-to-physical address mappings in the CPU's memory management unit.
 ### When
-Occurs during context switches between processes (if ASIDs are not used), when freeing virtual memory via munmap, during page table updates, or via TLB shootdowns (when one CPU notifies others to flush).
+Occurs during context switches between processes (if ASIDs are not used), when freeing virtual memory via mmap, during page table updates, or via TLB shootdowns (when one CPU notifies others to flush).
 ### Performance Impact
 Expensive. Forces the CPU to perform costly page table walks to re-cache mappings
 
@@ -198,6 +204,17 @@ A page table walk is the hardware-driven (MMU) or software-driven (kernel) proce
 * Cache and TLB Thrashing: Switching to the kernel means the CPU starts executing different code, often resulting in "cache misses." The CPU's hot cache lines—data and instructions currently being used by the application—are evicted to make room for kernel data, causing a slowdown until the cache is repopulated.
 * I/O Blocking: when used for Input/Output
 
+### Examples
+* process control
+  * `fork()`, `exec`, `wait()`
+* file management
+  * `open()`, `read()`, `write()`, `clone()`
+* device management
+  *  `ioctl()`, `read()`
+* information maintainance
+  * `getpid()`
+* communication
+  * `pipe()`, `socket()`
 ## Debugging Cache Misses
 ### Identify hot loops/functions
 ```shell

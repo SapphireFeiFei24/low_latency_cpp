@@ -1,4 +1,6 @@
 # Trading System Design
+## General Pipeline
+> Market Data → Signal Generation → Order Decision → Risk Check → Order Routing → Exchange → Execution → Position Update
 ## Market Data Feed Handlers
 > * Receives list quotes/trades from exchanges (TCP/UDP)
 > * Parses packets efficiently

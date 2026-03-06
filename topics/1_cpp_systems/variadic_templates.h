@@ -50,7 +50,7 @@ namespace variadic_templates {
             };
             // decltype(left) // Node* Node::*
             auto left = &Node::left; // pointer to a class member where the type of the member is Node*
-            auto right = &Node::right;
+            auto right = &Node::right; // acts like an offset where spefic filed lives relative to the start of any instean of that class
 
             // traverse tree, using fold expression:
             template<typename T, typename... TP>
