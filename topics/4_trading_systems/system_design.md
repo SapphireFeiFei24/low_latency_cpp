@@ -92,6 +92,22 @@ public:
   * Preload the new epoc before activation
   * A **global barrier** signal tells all nodes to switch simultaneously
 
+## Example: Stock Exchange System
+> [Details](https://www.systemdesignhandbook.com/guides/design-a-stock-exchange-system/)
+
+### Functional Requirements
+> Focus on order placement, matching and execution
+* [Order Submit] Allowing users or brokers to submit buy and sell orders for financial instruments
+* [Risk Validation] Validating these orders against basic constraints and risks limits
+* [Order Matching] Matching compatible orders according to deterministic price-time priority rules
+* [Result Persistence] Persisting the results so participants can see their executed trades
+### Non Functional Requirements
+* Low predictable latency
+* Very high throughput
+* Strong consistency(deterministic ordering guarantees)
+* High availability
+
+* ![img.png](img.png)
 ## Callbacks in C++
 > * `std::function` for flexibility
 > * Template-based callbacks to eliminate runtime overhead
@@ -107,6 +123,15 @@ public:
 * **Disruptor Pattern** with lock-free callbacks to pass order events between threads with minimal cache misses.
 
 ## Terms
+* Instruments
+  * Definition: Any tradable asset, security or contract
+  * Purpose: used to transfer value, store wealth, or manage risk
+  * Examples:
+    * Equities/Stocks
+    * Fixed Income/Bonds
+    * Forex
+    * Commodities
+    * Derivatives
 * Ticks
   * The smallest possible price movement for a specific financial instrument on a exchange.
   * Tick size: Exchange matching engines are programmed to only accept price levels that are integer multiples of the tick size.

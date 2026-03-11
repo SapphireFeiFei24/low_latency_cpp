@@ -50,7 +50,8 @@ namespace smart_ptr {
     template <typename T>
     class SharedPtr {
         T* _data;
-        std::atomic<int>* _count; // Maintain this integer on the heap
+        std::atomic<int>* _count; // Strong reference count. Maintain this integer on the heap
+        // std::atomic<int>* _count; // Weak reference count
         void release() {
             // helper function: decrease count by one
             if (_count != nullptr) {

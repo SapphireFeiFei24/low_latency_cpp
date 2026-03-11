@@ -13,7 +13,7 @@ std::sort(tasks.begin(), tasks.end(), [&](const vector<int>& a, const vector<int
 > Return bool, true means it's placed at the bottom. (Less priority ones get popped out earlier)
 ```c++
 using MaxHeap = std::priority_queue<int>;
-using MinHeap = std::priority_queue<int, std::vector<int>, std::greater>;
+using MinHeap = std::priority_queue<int, std::vector<int>, std::greater<int>>;
 
 // customized cmp func (can't be used as a private member)
 // lambda is a functor that's created by the compiler

@@ -14,7 +14,7 @@
 ## TCP
 ### Handshakes
 > 3 Handshakes to connect, 4 Handshakes to disconnect 
-> * Why 4 handshakes for connection: avoid old duplicate connection
+> * Why 3 handshakes for connection: avoid old duplicate connection
 > * Why 4 handshakes for disconnection: After the client send FIN, the server can still send more data, when it's done sending data, it'll send a FIN back to client.
 ![img_2.png](img_2.png)
 
