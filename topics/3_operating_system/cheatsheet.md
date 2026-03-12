@@ -28,7 +28,7 @@ Low Address
 ## Cache
 ### L1/L2/L3 Cache
 > Specialized, high-speed SRAM memory levels embedded in or near the CPU, designed to minimize data access latency from slower DRAM.
-
+> Storing the Data.
 * L1 Cache
   * Fastest & Smallest memory.
   * Built directly into each CPU core.
@@ -47,6 +47,10 @@ Low Address
   * shared among all CPU cores and serves to coordinate data between them
   * 4MB ~ 64Mb+
 
+### RAM
+> Stores the Data. AND Page Table.
+* Slower than L1/L2/L3 Cache.
+
 ### Cache line
 > Cache line size: the number of bytes loaded together in one entry in the cache \
 > Usually 64 bytes
@@ -55,12 +59,20 @@ Low Address
 > Performance-degrading phenomenon in **multi-threaded** programs where multiple threads inadvertently access different, logically independent variables that happen to reside on the same cache line in the CPU cache.
 
 * How it occurs
-  * entire cache line loaded -> one core modifies ont part of it -> the entire line marked as invalid for other cores -> other cores tries to access sth on this line -> triggers reloading the whole line
+  * entire cache line loaded -> one core modifies one part of it -> the entire line marked as invalid for other cores -> other cores tries to access sth on this line -> triggers reloading the whole line
+* What's happening
+  * Thread A (on CPU 1) reads the cache line → gets a local copy 
+  * Thread B (on CPU 2) reads the same cache line → gets its own copy 
+  * Thread A writes to its variable → marks the cache line as "modified" on CPU 1 
+  * The cache coherence protocol (e.g. MESI) invalidates CPU 2's copy 
+  * Thread B now needs to write → must fetch the updated line from CPU 1 first 
+  * This ping-pong repeats on every write from either thread
+
 ## Virtual Memory
 > * Illusion of Large Memory
 > * Isolation between process
 > * Lazy allocation
-> * **Each process has itw own private page tables.**
+> * **Each process has its own private page tables.**
 ### Page
 > a fixed-length, contiguous block of virtual address space used by the operating system to manage memory efficiently.
 #### Page Faults
@@ -68,6 +80,7 @@ Low Address
 > This causes high latency, try to avoid this in trading system.
 
 ### Virtual Memory Address vs Page Table vs TLB
+> Store Virtual to Physical Address Mapping. Not the data.
 * Virtual Memory Address
   *  This is the overarching system enabling virtual addressing. It divides memory into "pages".
 * Page Table (in RAM)
@@ -76,9 +89,17 @@ Low Address
   * When the CPU needs a data address, it uses the page table, which is a table in memory, to find the corresponding physical frame. This is a "page walk".
   * Slow
 * TLB (Translation Lookaside Buffer, in CPU)
-  * Hardware cache storing recent virtual-to-physical translations.
+  * Hardware cache storing recent virtual-to-physical translations. **Not the actual data**
   * Fast
   * If TLB miss, check Page Table
+  ```text
+  ┌─────────────────┬──────────────────┬─────────────────────────────┐
+  │  Virtual Page   │  Physical Frame  │         Metadata            │
+  │  Number (VPN)   │  Number (PFN)    │                             │
+  ├─────────────────┼──────────────────┼─────────────────────────────┤
+  │  0xDEAD_B000    │  0x0042_1000     │ valid, dirty, user, RW, etc │
+  └─────────────────┴──────────────────┴─────────────────────────────┘
+  ```
 
 ## Memory Management
 ### Stack vs Heap Definition
