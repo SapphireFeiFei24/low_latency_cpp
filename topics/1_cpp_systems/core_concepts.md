@@ -75,4 +75,28 @@
 * Types that contain "Garbage"
   * Any type that doesn't have a Constructor to do the work for you will contain random data
   * Fundamental Types: int, float, double, char, bool, long etc
-  * 
+## Topics
+### `static_cast` vs `dynamic_cast` vs `reinterpret_cast` vs `const_cast`
+* `static_cast`
+  * Ordinary convertion or related class cast(derived to base)
+  * Compile time check for compatibility
+  * Cost is low
+  * Used in `std::move`
+  * void* to T*
+* `dynamic_cast`
+  * Downcasting in polymorphic inheritance hierarchies (base to derived).
+  * Safest, returns nullptr or throws on failure
+  * Relies on RTTI(runtime information) which is linked to vtable
+  * High cost
+* `reinterpre_cast`
+  * Tells the compiler to treat a sequence of bits as a different type without changing the bit pattern.
+  * No cost. Compile time
+  * No check like static_cast. Dangerous
+
+#### What it does when downcasting using `dynamic_cast`
+When you call dynamic_cast<Derived*>(base_ptr), the following happens:
+1. Check for Null: If base_ptr is null, it immediately returns null.
+2. Follow the Pointer: It looks at the memory base_ptr points to, finds the vptr (virtual pointer), and goes to that class's vtable.
+3. Consult RTTI: It looks up the type_info in that vtable to see what the actual most-derived type of the object is.
+4. Traverse the Hierarchy: It calculates if the requested Derived type exists in the inheritance tree of that actual object.
+5. Adjust the Pointer: If the cast is valid, it calculates the memory offset (important for multiple inheritance) and returns the new pointer. If invalid, it returns nullptr.
