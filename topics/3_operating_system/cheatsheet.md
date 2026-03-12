@@ -257,3 +257,24 @@ perf report
 ### When to use SoA
 * Access a few fields
 * GPU/SIMD heavy code
+
+## Memory Pool
+### Disadvantage of calling `new` `delete` repeatedly
+* Memory fragmentation
+  * slower allocations
+  * poor cache locality
+* Unpredictable latency
+  * search free lists
+  * lock internal structures
+  * request memory from OS
+* Does not guarantee
+  * contiguous memory
+  * cache-friendly layout
+### Two Scenarios
+* Arena memory: alloc and dealloc in sequence
+  * Continuous block
+  * record top
+  * message queue, request process
+* Free-List Memory Pools
+  * Random allocation, random free
+  * Long-lived objects
