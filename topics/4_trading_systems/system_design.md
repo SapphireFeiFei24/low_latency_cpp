@@ -107,6 +107,34 @@ public:
 * Strong consistency(deterministic ordering guarantees)
 * High availability
 
+## Example 2: Order Bool
+### Functional Requirement
+* `add_order(order)` — insert at the right price level, create level if new
+* `cancel_order(order_id)` — remove a specific order (requires an order ID → location map for O(1) lookup)
+* `match_order(market_order)` — consume the best ask (for buys) or best bid (for sells), possibly partial fills
+* `get_best_bid()` / `get_best_ask()` — O(1)
+* `get_spread()` — difference between best ask and best bid
+
+### Nonfunctional Considerations
+* Predictable latency
+* Cache Locality
+* CPU
+
+### Solutions
+* SortedMap(price->order_queue), UnorderedMap(order_id->order_ptr)
+  * two heap version can't delete order efficiently
+  * predictable latency
+  * work for most scenarios
+  * bad cache locality
+* Vector of order queue indexed by price
+  * good for bounded price
+  * pre-alloc all levels
+  * good cache locality
+  * O(n) scan or track
+* Vector of order sorted by price
+  * bst insert/remove
+  * good for few active levels
+  * compact, cache friendly
 * ![img.png](img.png)
 ## Callbacks in C++
 > * `std::function` for flexibility
