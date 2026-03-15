@@ -198,7 +198,24 @@ clone allows:
 ### Shared Memory
 * `mmap()`: map files or devices into a process's virtual memory space
 * `shmget()`: return the identifier of the shared memory segment associated with the value of the argument key
-### Pipes andSockets
+### Pipes
+* Allow two or more process to communicate with each other by creating a unidirectional or bidirectional **channel** that allows data to be transferred between processes.
+* How it works:
+  * A pipe descriptor, has an array that stores two pointers, one pointer is for its input end and the other pointer is for its output end.
+  * Process A should keep its write end open and close the read end of the pipe.
+    Process B should keep its read end open and close its write end. When a pipe is created, it is given a fixed size in bytes.
+* Pros
+  * Simplicity
+  * Efficiency
+  * Reliability
+  * Flexibility
+    * One way or two way
+* Cons
+  * Limited capacity
+  * Synchronization
+    * In a bidirectional pipe, processes must be synchronized to ensure that data is transmitted in the correct order.
+  * Limited scalability
+### Sockets
 
 ## TLB flush
 > clears cached virtual-to-physical address mappings in the CPU's memory management unit.
