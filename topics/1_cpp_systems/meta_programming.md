@@ -26,7 +26,7 @@ using Type = decltype(std::tuple_cat(
 ```
 ### Type Deducing
 ```c++
-// deducing return type
+// deducing return type at compile time
 template<typename T1, typename T2>
 auto max(T1 a, T2 b) {
     return b < a ? a : b;
@@ -80,8 +80,8 @@ return (... + s); // ((s1 + s2) + s3) ...
 ![img.png](img.png)
 
 ## `decltype` and `declval`
-> both `decltype` and `declval` is compile time
-* decltype is a keyword that inspects the type of an expression, 
+> both `decltype` and `declval` are compile time
+* decltype is a keyword that inspects the type of expression, 
 * while std::declval is a utility function template used in conjunction with decltype to create a fictitious object of a given type in an unevaluated context, particularly useful in template metaprogramming. 
   * only used during compile time. It'll fail to compile if use it at runtime.
 ```c++
@@ -112,3 +112,11 @@ void foo() {
 }
 B<T>::Type x; // not inside a template, it's known
 ```
+## Trait
+> A class or struct template used in generic programming to provide information about or modify the properties of, other types at compile time.
+### Key Concepts
+> Achieved through Template Specialization
+* Compile-Time Mechanism: all operations and information provided by traits occur during compilation, incurring no runtime overhead.
+* information Encapsulation: A trait encapsulates type-specific properties as static members(constants or type alias).
+* Generic Programming Aid: primarily used by generic algorithms to make decisions, optimize code or ensure type safety.
+* Non-Intrusive: Allow you to add properties to existing types including built-in types (like int or char), without modifying the original type's definition.

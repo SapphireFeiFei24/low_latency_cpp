@@ -23,6 +23,22 @@ cv.notify_all();
 * Stat Flag: if a writer is currently active or waiting
 * Condition Variables
 
+### What happens when a thread is blocked by a lock
+* The OS intervenesL mutex typically triggers a system call that informs the OS the current thread cannot proceed
+* **Descheduling**: The OS moves the thread from "Running" state to a "Blocked" or "Waiting" state. This means the scheduler will no longer assign CPU time to that thread
+  * Involves context switch
+* Zero CPU Usage
+
+#### The Wait Queue
+* Every mutex internally maintains a wait queue of all threads currently waiting for it
+* When your thread blocks, the OS adds it to this specific queue.
+* The CPU is then immediately **context-switched** to a different, "Ready" thread that can actually perform work.
+
+#### Waking Up
+* Signaling: The OS is notified that the resource is free.
+* Rescheduling: The OS looks at the mutex's wait queue and picks one (or more) blocked threads to wake up.
+* Ready State: The chosen thread's state changes from "Blocked" back to "Ready" (or "Runnable"). It is placed back in the global scheduler queue to wait for its next turn on the CPU.
+
 ## Lock-free: atomic
 > * Implemented using a combination of special CPU instructions and compiler-level memory barriers
 > * Neither copyable nor movable.

@@ -86,7 +86,7 @@ public:
   * Skip ticks until the node has confirmed to be updated to the correct version
   * Trade off: miss ticks -> lose money
 * Solution B: Centralized Config Service with Consensus
-  * All nodes subscribe to config service, acknowledge receipt before the update is condiered "applied"
+  * All nodes subscribe to config service, acknowledge receipt before the update is considered "applied"
 * Solution C: Epoch-Based Strategy Switching
   * treat each config change as a **new strategy epoch**
   * Preload the new epoc before activation

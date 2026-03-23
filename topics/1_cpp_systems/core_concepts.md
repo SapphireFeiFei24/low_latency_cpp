@@ -43,6 +43,7 @@
     * Virtual Inheritance
         * Solve diamond shape inheritance
         * Ensure the derived class contains a single shared instance of a common base class
+        * Unlike normal inherited class which stores in the beginning of the object, virtual inherited object stored at the end of the object
 ### 3. Function Inlining and Call Overhead
 * A non-inlined call costs 3–10ns on modern CPUs due to pipeline & branch misprediction.
 
@@ -58,9 +59,11 @@
   * non-copyable, movable
 * `shared_ptr`
   * shared ownership
-  * reference_count + data
+  * reference_count + pointer to control block
+    * strong reference count: shared_ptr
+    * weak reference count: unique_ptr
 
-### 6. RAII(Resource Aquisition Is Initialization)
+### 6. RAII(Resource Acquisition Is Initialization)
 > Ties the lifecycle of a resource to the lifetime of an object
 > Acquisition in the Constructor, Release in the Destructor
 
@@ -88,7 +91,7 @@
   * Safest, returns nullptr or throws on failure
   * Relies on RTTI(runtime information) which is linked to vtable
   * High cost
-* `reinterpre_cast`
+* `reinterpret_cast`
   * Tells the compiler to treat a sequence of bits as a different type without changing the bit pattern.
   * No cost. Compile time
   * No check like static_cast. Dangerous
@@ -97,6 +100,6 @@
 When you call dynamic_cast<Derived*>(base_ptr), the following happens:
 1. Check for Null: If base_ptr is null, it immediately returns null.
 2. Follow the Pointer: It looks at the memory base_ptr points to, finds the vptr (virtual pointer), and goes to that class's vtable.
-3. Consult RTTI: It looks up the type_info in that vtable to see what the actual most-derived type of the object is.
+3. **Consult RTTI**: It looks up the type_info in that vtable to see what the actual most-derived type of the object is.
 4. Traverse the Hierarchy: It calculates if the requested Derived type exists in the inheritance tree of that actual object.
 5. Adjust the Pointer: If the cast is valid, it calculates the memory offset (important for multiple inheritance) and returns the new pointer. If invalid, it returns nullptr.

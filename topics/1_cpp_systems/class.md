@@ -34,10 +34,25 @@ When a std::vector needs to resize, it will move elements to the new memory bloc
 
 ## Virtual Function
 > * One virtual table per class.
+>   * A static array of functions pointers is created for each class that has or inherits virtual functios.
+>   * Each entry in the vtable points to the most derived implementation of a virtual function accessible by that class.
 > * One virtual ptr(pointing to virtual table) per object.
+> * Slower than nonvirtual: involves pointer look up
 
 ### Virtual Table Construction
-> Constructed at runtime.
+> * Constructed at runtime.
+> * Add .rodata under data segment
+
+### How the Call is Resolved
+1. vptr->vtable: The program follows the object's VPtr to find the correct VTable.
+2. function addr->offset: It looks up the function's address at a fixed offset (index) within that table.
+3. Address->code: It jumps to that address to execute the most-derived version of the function.
+
+## Virtual inheritance
+* Solve diamond shape inheritance
+* Ensure the derived class contains a single shared instance of a common base class
+* Unlike normal inherited class which stores in the beginning of the object, virtual inherited object stored at the end of the object
+
 ## Memory Layout
 ### Alignment - Paddings
 > CPUs fetch memory in aligned chunks (words or cache lines).
@@ -82,6 +97,9 @@ public:
 ```
 ### Inheritance
 > Base class memory comes first
+
+### Virtual Inheritance
+> Virtual inherited class memory is storeed at the end of the object.
 
 ### False Sharing
 > Two (or more) cores modify the different variables on the same cache line. \

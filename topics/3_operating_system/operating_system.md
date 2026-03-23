@@ -19,7 +19,7 @@ High Address
 +------------------+
 | BSS              |  ← (Block started Symbol) uninitialized globals
 +------------------+
-| Data             |  ← initialized globals
+| Data             |  ← initialized globals(rodata like vtable, read write data like gobal and static variables)
 +------------------+
 | Text / Code      |
 +------------------+
