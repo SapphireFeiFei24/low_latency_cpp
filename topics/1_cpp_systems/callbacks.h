@@ -57,7 +57,7 @@ namespace callback {
     class NasdaqHandler: public TradingBase<NasdaqHandler> {
     public:
         void onTick() {
-            // acutal implementation
+            // actual implementation
         }
     };
 

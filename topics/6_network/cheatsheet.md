@@ -1,13 +1,20 @@
 # Network
 ## The 7 OSI Model Layers (Top to Bottom):
-* Layer 7: Application Layer: Interacts directly with software applications to provide network services (e.g., HTTP, FTP, SMTP, DNS).
-* Layer 6: Presentation Layer: Formats, encrypts, and compresses data for the application layer, ensuring compatibility (e.g., SSL/TLS, ASCII, JPEG).
-* Layer 5: Session Layer: Manages, maintains, and terminates connections between applications on different devices (e.g., SYN/ACK, API sessions).
-* Layer 4: **Transport Layer**: Handles end-to-end communication, flow control, and error correction (e.g., TCP, UDP, port numbers).
-* Layer 3: **Network Layer**: Manages logical addressing (IP addresses) and routing data packets across networks (e.g., Routers).
-* Layer 2: Data Link Layer: Handles **node-to-node** data transfer, physical addressing (MAC addresses), and error detection (e.g., Switches, Bridges, Ethernet).
-* Layer 1: Physical Layer: Transmits **raw bitstreams** over physical media (e.g., cables, hubs, NICs, optical signals).
-![img.png](img.png)
+* Layer 7: Application Layer: Interacts directly with software applications to provide network services 
+  * (e.g., HTTP, FTP, SMTP, DNS).
+* Layer 6: Presentation Layer: Formats, encrypts, and compresses data for the application layer, ensuring compatibility 
+  * (e.g., SSL/TLS, ASCII, JPEG).
+* Layer 5: Session Layer: Manages, maintains, and terminates connections between applications on different devices
+  * (e.g., SYN/ACK, API sessions, RPC).
+* Layer 4: **Transport Layer**: Handles end-to-end communication, flow control, and error correction 
+  * (e.g., TCP, UDP, port numbers).
+* Layer 3: **Network Layer**: Manages logical addressing (IP addresses) and routing data packets across networks 
+  * (e.g., IP,ICMP,IGMP,Routers).
+* Layer 2: Data Link Layer: Handles **node-to-node** data transfer, physical addressing (MAC addresses), and error detection
+  * (e.g., Switches, Bridges, Ethernet).
+* Layer 1: Physical Layer: Transmits **raw bitstreams** over physical media
+  * (e.g., Wi-Fi, cables, hubs, NICs, optical signals).
+  ![img.png](img.png)
 ## TCP/IP 5 Layer model
 ![img_1.png](img_1.png)
 
@@ -68,6 +75,19 @@ Once packets reach their destination, the process is reversed to reassemble the 
 * Reassembly (TCP): The receiving device uses the sequence numbers in the headers to put the packets back in the correct order.
 * Handling Errors: If a packet is lost or corrupted, TCP requests a retransmission of that specific packet, not the entire file.
 
-## DNS // TODO
+## Address Lookup
+### Routing - IP Address
+> * When a router receives a data packet, it doesn't "know" the final destination's physical location.
+> * Instead, it performs a routing table lookup to find the next hop.
+* Longest Prefix Match: the router compares the destination IP address against its *routing table*.
+  * It looks for the entry that matches the most bits of the IP address -- the longest prefix
+* AND Operation: the router uses a subnet mask and performs a bitwise `AND` operation with the destination IP to determine which network segment the packet belongs to.
+* Default Gateway: no specific match is found the router sens the packet to a gateway.
+
+### DNS(Domain Name Service) -  Named Address
+> Return IP address
+* Step1: check computer's local cache
+* Step2: DNS solver(provided by ISP) to find the address
+  * Tree hierarchy lookup
 
 ## Socket Programming in C++ // TODO

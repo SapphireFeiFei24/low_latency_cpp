@@ -88,7 +88,7 @@ namespace memory_pool {
 
         void deallocate(T* obj) {
 
-            obj->~T(); // must call it explicitely
+            obj->~T(); // must call it explicitly
 
             Node* node = reinterpret_cast<Node*>(obj);
 

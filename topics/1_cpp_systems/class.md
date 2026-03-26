@@ -14,7 +14,7 @@
   * Constructor: initialize a new object from existing one
     * Allocate new resource
   * Assignment Operator: update an already existing object
-    * Resue the current resource
+    * Reuse the current resource
     * Requires careful handling of self-assignment and proper resource management.
 ## Rule of Five
 > If any of the special member functions is defined for a class, then it is better to define all of them.
@@ -24,7 +24,10 @@
 ### `std::vector` Optimization
 > If without `noexcept`, the vector will use copy transfers which guarantees: \
 > The original vector will only be destroyed when the new vector is fully constructed during reallocation.
-When a std::vector needs to resize, it will move elements to the new memory block only if the move constructor is marked noexcept. If you omit it, the vector will perform a slow copy of every element instead. It does this to maintain the "Strong Exception Guarantee"—if a move throws halfway through a resize, the vector cannot easily roll back.
+When a std::vector needs to resize, it will move elements to the new memory block only if the move constructor is marked noexcept.
+* If you omit it, the vector will perform a slow copy of every element instead.
+  * `memcpy` is faster than slow element copy: memcpy is highly optimized, often copy by chunks instead of bytes
+* It does this to maintain the "Strong Exception Guarantee"—if a move throws halfway through a resize, the vector cannot easily roll back.
 
 ### `move` semantics should never throw
 > Telling the compiler "this operation is safe and cheap"
@@ -34,7 +37,7 @@ When a std::vector needs to resize, it will move elements to the new memory bloc
 
 ## Virtual Function
 > * One virtual table per class.
->   * A static array of functions pointers is created for each class that has or inherits virtual functios.
+>   * A static array of functions pointers is created for each class that has or inherits virtual functions.
 >   * Each entry in the vtable points to the most derived implementation of a virtual function accessible by that class.
 > * One virtual ptr(pointing to virtual table) per object.
 > * Slower than nonvirtual: involves pointer look up
@@ -51,14 +54,15 @@ When a std::vector needs to resize, it will move elements to the new memory bloc
 ## Virtual inheritance
 * Solve diamond shape inheritance
 * Ensure the derived class contains a single shared instance of a common base class
-* Unlike normal inherited class which stores in the beginning of the object, virtual inherited object stored at the end of the object
+* Unlike normal inherited class which stores in the beginning of the object, **virtual inherited object stored at the end of the object**
 
 ## Memory Layout
 ### Alignment - Paddings
 > CPUs fetch memory in aligned chunks (words or cache lines).
 If data crosses boundaries, the CPU may need multiple memory accesses.
-* Variable x must start at the offset that's a multiple of the sizeof(x)
-* Struct size must be multiple of struct alignment.
+* [Sequential Allocation] Members are allocated in the order they declared.
+* [Individual Member Alignment] Variable x must start at the offset that's a multiple of the sizeof(x)
+* [Struct/Class Alignment] Struct size must be multiple of the maximum struct alignment of all of its individual members.
 * To minimize paddings: start with the largest variables
 ```c++
 struct A {

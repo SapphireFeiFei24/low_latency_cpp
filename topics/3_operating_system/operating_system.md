@@ -43,7 +43,7 @@ Low Address
   * 256KB to 1MB
 
 * L3 Cache
-  * largest and slowest of the cache levels, still significantly faster than main RAm
+  * largest and slowest of the cache levels, still significantly faster than main RAM
   * shared among all CPU cores and serves to coordinate data between them
   * 4MB ~ 64Mb+
 
@@ -220,7 +220,7 @@ clone allows:
 ## TLB flush
 > clears cached virtual-to-physical address mappings in the CPU's memory management unit.
 ### When
-Occurs during context switches between processes (if ASIDs are not used), when freeing virtual memory via mmap, during page table updates, or via TLB shootdowns (when one CPU notifies others to flush).
+Occurs during context switches between **processes** (if ASIDs are not used), when freeing virtual memory via mmap, during page table updates, or via TLB shootdowns (when one CPU notifies others to flush).
 ### Performance Impact
 Expensive. Forces the CPU to perform costly page table walks to re-cache mappings
 
@@ -253,6 +253,7 @@ A page table walk is the hardware-driven (MMU) or software-driven (kernel) proce
   * `getpid()`
 * communication
   * `pipe()`, `socket()`
+
 ## Debugging Cache Misses
 ### Identify hot loops/functions
 ```shell
@@ -274,6 +275,11 @@ perf report
 ### When to use SoA
 * Access a few fields
 * GPU/SIMD heavy code
+
+## Advantage of Contiguous Memory
+* **Improved Cache Performance -- Spatial Locality**
+  * When the CPU accesses a data element, it loads adjacent data into cache, resulting in a high cache hit ratio.
+* Faster Execution: avoid looking up scattered locations.
 
 ## Memory Pool
 ### Disadvantage of calling `new` `delete` repeatedly

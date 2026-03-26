@@ -35,7 +35,7 @@ namespace lockfree {
             // Check if full - use cached_head to avoid atomic load every time
             // cached_head is inside the same cache line with curr_tail
             if (curr_tail - cached_head > N) {
-                cached_tail = head.load(std::memory_order_acquire); // ensure all the previous writes visitble
+                cached_tail = head.load(std::memory_order_acquire); // ensure all the previous writes visible
                 // check with the latest data again
                 if (curr_tail - cached_tail > N) {
                     return false; // truly full

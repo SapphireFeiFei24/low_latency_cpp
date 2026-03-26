@@ -149,6 +149,11 @@ void increment() {
     }
 }
 ```
+## Semaphore
+> Non-negative integer variable that is shared between various threads. \
+> Works upon signaling mechanism in this a thread can be signaled by another thread.
+> * Use a Semaphore when you need to **limit the number of concurrent users for a resource** (like limiting a web crawler to 10 simultaneous connections) or when one task needs to notify another that an event has occurred.
+
 ## Performance: Mutex vs Atomic
 > In general, atomics significantly outperform mutexes for simple operations. \
 > Because they operate at the hardware level, avoiding the expensive operating system "kernel calls" and "context switches" required by locks.
