@@ -30,7 +30,7 @@ namespace variadic_templates {
                 using Type = typename Join<typename Reverse<std::tuple<Rest...>>::Type, std::tuple<FirstType>>::Type;
             };
 
-            // not ideal: constructing a real obj, its' run time
+            // not ideal: constructing a real obj, it's run time
             // template <typename FirstType, typename ... Types>
             // struct Reverse<std::tuple<FirstType, Types...>> {
             //     using Type = decltype(std::tuple_cat(

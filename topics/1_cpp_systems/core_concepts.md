@@ -81,7 +81,7 @@
 ## Topics
 ### `static_cast` vs `dynamic_cast` vs `reinterpret_cast` vs `const_cast`
 * `static_cast`
-  * Ordinary convertion or related class cast(derived to base)
+  * Ordinary conversion or related class cast(derived to base)
   * Compile time check for compatibility
   * Cost is low
   * Used in `std::move`

@@ -65,7 +65,7 @@ RVO fails when:
 ## Perfect Forwarding and `std::move`
 ### `std::move`
 > * `std::move` is just a cast to `T&&` -- it doesn't move anything by itself
-> * `&&`: an Rvalue reference declaration (C++11 and later)
+> * `&&`: a Rvalue reference declaration (C++11 and later)
 > * it's s compile-time construct that performs a cast, while the actual resource transfer happens at runtime within a movee constructor or move assignment operator.
 
 It allows the compiler to pick the move constructor.
@@ -92,7 +92,7 @@ void wrapper(T&& arg) {
 
 
 #### T&& arg in a template
-Normally, `T&&` means an rvalue reference - but in a template, it behaves differently.
+Normally, `T&&` means a rvalue reference - but in a template, it behaves differently.
 > When `T` is a template parameter, T&& is a forwarding reference(also knwon as universal reference).
 Rule:
 If `T` is a deducted template parameter and the parameter type is `T&&`, then it's a *forwarding reference*.

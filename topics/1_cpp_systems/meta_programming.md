@@ -46,7 +46,7 @@ template<typename T>
    using DequeStack = Stack<T, std::deque<T>>;
  DequeStack<int>
 ```
-### Nonetype Class Template Param
+### Non-type Class Template Param
 ```c++
 template<typename T, size_t Maxsize>
 class Stack{

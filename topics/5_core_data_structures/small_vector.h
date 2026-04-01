@@ -9,13 +9,13 @@
  * Free existing rules: only in assignment operators, NOT in constructors
  ***/
 namespace small_vector {
+    template <typename T, size_t THRES>
     class SmallVector {
-        int* _heap_data;
-        static constexpr int THRES = 8;
+        T* _heap_data;
         std::array<int, THRES> _stack_data = {0};
         int _capacity;
         int _cnt;
-        std::allocator<int> _alloc;
+        std::allocator<T> _alloc;
         bool using_heap() const {
             return _capacity > THRES;
         }
@@ -116,7 +116,7 @@ namespace small_vector {
             return *this;
         }
 
-        void push_back(int value) {
+        void push_back(T value) {
             if (_cnt == _capacity) {
                 int new_capacity = std::max(1, 2 * _capacity);
                 // resize
@@ -154,22 +154,22 @@ namespace small_vector {
             return _stack_data.data();
         }
         class iterator {
-            int *ptr;
+            T *ptr;
         public:
-           iterator(int *ptr_) : ptr(ptr_) {}
-            int& operator*() {return *ptr;}
+           iterator(T *ptr_) : ptr(ptr_) {}
+            T& operator*() {return *ptr;}
             iterator& operator++() {++ptr; return *this;}
             iterator operator++(int) {iterator tmp = *this; ptr++; return tmp;}
 
 
         };
-        int* begin() {
+        iterator begin() {
             if (using_heap()) {
                 return iterator(_heap_data);
             }
             return iterator(_stack_data.begin());
         }
-        int* end() {
+        iterator end() {
             if (using_heap()) {
                 return iterator(_heap_data + _cnt);
             }
