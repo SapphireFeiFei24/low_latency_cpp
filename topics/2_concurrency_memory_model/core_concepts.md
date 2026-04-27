@@ -96,7 +96,7 @@ bool succ = counter.compare_exchange_strong(expected, 10); // only updates the v
     → returns from yield()
     ```
   * Cost: context switch, slow
-    * safe status(register, TBL flushes, cache goes cold)
+    * safe status(register, TLB flushes, cache goes cold)
 * sleep
   * slower than yield
   * Removed from scheduling entirely until the timer expires

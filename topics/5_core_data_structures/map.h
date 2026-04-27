@@ -9,7 +9,7 @@
  *  Median: Root and/or one of its children
  * Why prefer ordered map over unordered map?
  *  Ordered
- *  Predictable worse case complextiy: O(logN) vs O(N)
+ *  Predictable worse case complexity: O(logN) vs O(N)
  ***/
 
 void use_map () {

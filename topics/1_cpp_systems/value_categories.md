@@ -93,7 +93,7 @@ void wrapper(T&& arg) {
 
 #### T&& arg in a template
 Normally, `T&&` means a rvalue reference - but in a template, it behaves differently.
-> When `T` is a template parameter, T&& is a forwarding reference(also knwon as universal reference).
+> When `T` is a template parameter, T&& is a forwarding reference(also known as universal reference).
 Rule:
 If `T` is a deducted template parameter and the parameter type is `T&&`, then it's a *forwarding reference*.
 ##### Reference collapsing rules
