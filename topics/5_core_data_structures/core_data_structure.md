@@ -89,3 +89,17 @@ int main()
     observe();
 }
 ```
+### `make_shared` vs default constructor (`new`)
+#### 1. Performances and Memory
+* default constructor
+  * Two separate allocation: one for the object and one for the control block
+* `make_shared`
+  * One single allocation: obj and control block in the same continuous memory
+    * Faster, cache locality
+#### 2. Safety
+* default constructor: risky in expressions
+* `make_shared`: exception safe
+
+#### 3. Private Constructor and Customer Deleter
+* * default constructor: works
+* `make_shared`: not working
